@@ -35,7 +35,9 @@ public class TaskService {
 
     // Delete Task
     public void deleteTask(Long id) {
-        taskRepository.deleteById(id);
+        Task existingTask = taskRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Task not found"));
+        taskRepository.delete(existingTask);
     }
     // Update Task
     public Task updateTask(Long id, Task updatedTask) {
@@ -52,4 +54,3 @@ public class TaskService {
 
 
 }
-
